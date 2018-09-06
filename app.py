@@ -2,29 +2,30 @@ from flask import Flask,jsonify,request
 from flasgger import Swagger
 from sklearn.externals import joblib
 import json
-import string
 
 bahasaID = Flask(__name__)
 Swagger(bahasaID)
 
 def createJSONSentenceList(listName):
+    default = 'blank'
     hasilKalimat = {}
     hasilKalimat['daftarKalimat'] = []    
     for index, item in enumerate(listName):
         list_kalimat = {}
         list_kalimat['no_kalimat'] = index
         list_kalimat['teks_kalimat'] = item
-        hasilKalimat['daftarKalimat'].append(list_kalimat)
+        hasilKalimat['daftarKalimat'].append(list_kalimat.setdefault(index,item))
     return hasilKalimat
 
 def createJSONWordsList(listName):
+    default = 'blank'
     hasilKata = {}
     hasilKata['daftarKata'] = []    
     for index, item in enumerate(listName):
         list_kata = {}
         list_kata['no_kata'] = index
         list_kata['teks_kata'] = item
-        hasilKata['daftarKata'].append(list_kata)
+        hasilKata['daftarKata'].append(list_kata.setdefault(index,item))
     return hasilKata
 
 @bahasaID.route('/sentTokenizer/doc', methods=['POST'])
