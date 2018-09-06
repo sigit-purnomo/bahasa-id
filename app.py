@@ -7,14 +7,15 @@ bahasaID = Flask(__name__)
 Swagger(bahasaID)
 
 def createJSONSentenceList(listName):
-    default = 'blank'
+    default_index = '0'
+    default_item ='blank'
     hasilKalimat = {}
     hasilKalimat['daftarKalimat'] = []    
     for index, item in enumerate(listName):
         list_kalimat = {}
         list_kalimat['no_kalimat'] = index
         list_kalimat['teks_kalimat'] = item
-        hasilKalimat['daftarKalimat'].append(list_kalimat.setdefault(index,item))
+        hasilKalimat['daftarKalimat'].append(list_kalimat['no_kalimat'].setdefault(index,default_index),list_kalimat['teks_kalimat'].setdefault(item,default_item))
     return hasilKalimat
 
 def createJSONWordsList(listName):
@@ -26,7 +27,7 @@ def createJSONWordsList(listName):
         list_kata = {}
         list_kata['no_kata'] = index
         list_kata['teks_kata'] = item
-        hasilKata['daftarKata'].append(list_kata['no_kata'].setdefault(index,default_index),list_kata['no_kata'].setdefault(item,default_item))
+        hasilKata['daftarKata'].append(list_kata['no_kata'].setdefault(index,default_index),list_kata['teks_kata'].setdefault(item,default_item))
     return hasilKata
 
 
