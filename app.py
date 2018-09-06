@@ -18,15 +18,17 @@ def createJSONSentenceList(listName):
     return hasilKalimat
 
 def createJSONWordsList(listName):
-    default = 'blank'
+    default_index = '0'
+    default_item ='blank'
     hasilKata = {}
     hasilKata['daftarKata'] = []    
     for index, item in enumerate(listName):
         list_kata = {}
         list_kata['no_kata'] = index
         list_kata['teks_kata'] = item
-        hasilKata['daftarKata'].append(list_kata.setdefault(index,item))
+        hasilKata['daftarKata'].append(list_kata['no_kata'].setdefault(index,default_index),list_kata['no_kata'].setdefault(item,default_item))
     return hasilKata
+
 
 @bahasaID.route('/sentTokenizer/doc', methods=['POST'])
 def sent_tokenize():
