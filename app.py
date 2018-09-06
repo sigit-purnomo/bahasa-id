@@ -21,9 +21,10 @@ def createJSONSentenceList(listName):
             list_kalimat['no_kalimat'] = index
             list_kalimat['teks_kalimat'] = item
             hasilKalimat['daftarKalimat'].append(list_kalimat)
+        return hasilKalimat
     except KeyError:
         pass
-    return hasilKalimat
+    
 
 
 def createJSONWordsList(listName):
@@ -40,9 +41,10 @@ def createJSONWordsList(listName):
             list_kata['no_kata'] = index
             list_kata['teks_kata'] = item
             hasilKata['daftarKata'].append(list_kata)
+        return hasilKata
     except KeyError:
         pass
-    return hasilKata
+    
 
 
 @bahasaID.route('/sentTokenizer/doc', methods=['POST'])
