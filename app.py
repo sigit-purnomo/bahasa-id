@@ -16,7 +16,7 @@ def createJSONSentenceList(listName):
     list_kalimat = {}
     #hasilKalimat['daftarKalimat'] = adict.get('no_kalimat',default_index)
     #hasilKalimat['daftarKalimat'] = adict.get('teks_kalimat',default_item)
-    for index, item in enumerate(listName)   
+    for index, item in enumerate(listName):   
         list_kalimat['no_kalimat'] = index
         list_kalimat['teks_kalimat'] = item
         hasilKalimat['daftarKalimat'].append(list_kalimat)
