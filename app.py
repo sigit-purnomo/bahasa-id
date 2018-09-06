@@ -10,12 +10,14 @@ def createJSONSentenceList(listName):
     default_index = '0'
     default_item ='blank'
     hasilKalimat = {}
-    hasilKalimat['daftarKalimat'] = []    
+    hasilKalimat['daftarKalimat'] = [] 
+    list_kalimat = {}
+    list_kalimat = adict.get('no_kalimat', default_index)
+    list_kalimat = adict.get('teks_kalimat', default_index)
     for index, item in enumerate(listName):
-        list_kalimat = {}
         list_kalimat['no_kalimat'] = index
         list_kalimat['teks_kalimat'] = item
-        hasilKalimat['daftarKalimat'].append(list_kalimat['no_kalimat'].setdefault(index,default_index),list_kalimat['teks_kalimat'].setdefault(item,default_item))
+        hasilKalimat['daftarKalimat'].append(list_kalimat)
     return hasilKalimat
 
 def createJSONWordsList(listName):
@@ -23,11 +25,13 @@ def createJSONWordsList(listName):
     default_item ='blank'
     hasilKata = {}
     hasilKata['daftarKata'] = []    
+    list_kata = {}
+    list_kata = adict.get('no_kata', default_index)
+    list_kata = adict.get('teks_kata', default_item)
     for index, item in enumerate(listName):
-        list_kata = {}
         list_kata['no_kata'] = index
         list_kata['teks_kata'] = item
-        hasilKata['daftarKata'].append(list_kata['no_kata'].setdefault(index,default_index),list_kata['teks_kata'].setdefault(item,default_item))
+        hasilKata['daftarKata'].append(list_kata)
     return hasilKata
 
 
