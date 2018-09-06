@@ -1,6 +1,7 @@
 from flask import Flask,jsonify,request
 from flasgger import Swagger
 from sklearn.externals import joblib
+from adict import adict
 import json
 
 bahasaID = Flask(__name__)
@@ -13,7 +14,7 @@ def createJSONSentenceList(listName):
     hasilKalimat['daftarKalimat'] = [] 
     list_kalimat = {}
     list_kalimat = adict.get('no_kalimat', default_index)
-    list_kalimat = adict.get('teks_kalimat', default_index)
+    list_kalimat = adict.get('teks_kalimat', default_item)
     for index, item in enumerate(listName):
         list_kalimat['no_kalimat'] = index
         list_kalimat['teks_kalimat'] = item
@@ -109,4 +110,3 @@ def word_tokenize():
   
     return jsonify(createJSONWordsList(resultToken))
 
-#bahasaID.run(debug=True)
