@@ -101,4 +101,4 @@ def word_tokenize():
   
     return jsonify(createJSONWordsList(resultToken))
 
-bahasaID.run(debug=True)
+#bahasaID.run(debug=True)
