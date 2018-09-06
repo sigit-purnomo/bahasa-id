@@ -59,7 +59,7 @@ def sent_tokenize():
     doc = new_doc['document']
     
 
-    tokenizer = joblib.load('static/tokenizer.pkl')
+    tokenizer = joblib.load('tokenizer.pkl')
     resultToken = tokenizer[0](text=doc)
   
     return jsonify(createJSONSentenceList(resultToken))
@@ -96,7 +96,7 @@ def word_tokenize():
     sent = new_sent['sentence']
     
 
-    tokenizer = joblib.load('static/tokenizer.pkl')
+    tokenizer = joblib.load('tokenizer.pkl')
     resultToken = tokenizer[1](sent)
   
     return jsonify(createJSONWordsList(resultToken))
