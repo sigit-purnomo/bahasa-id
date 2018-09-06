@@ -9,32 +9,39 @@ Swagger(bahasaID)
 
 def createJSONSentenceList(listName):
     #default_index = '0'
-    default_item ='blank'
-    hasilKalimat = {}
-    hasilKalimat['daftarKalimat'] = [] 
-    hasilKalimat = adict.get('daftarKalimat',default_item)
-    list_kalimat = {}
-    #hasilKalimat['daftarKalimat'] = adict.get('no_kalimat',default_index)
-    #hasilKalimat['daftarKalimat'] = adict.get('teks_kalimat',default_item)
-    for index, item in enumerate(listName):   
-        list_kalimat['no_kalimat'] = index
-        list_kalimat['teks_kalimat'] = item
-        hasilKalimat['daftarKalimat'].append(list_kalimat)
+    #default_item ='blank'
+    try: 
+        hasilKalimat = {}
+        hasilKalimat['daftarKalimat'] = [] 
+        #hasilKalimat = adict.get('daftarKalimat',default_item)
+        list_kalimat = {}
+        #hasilKalimat['daftarKalimat'] = adict.get('no_kalimat',default_index)
+        #hasilKalimat['daftarKalimat'] = adict.get('teks_kalimat',default_item)
+        for index, item in enumerate(listName):   
+            list_kalimat['no_kalimat'] = index
+            list_kalimat['teks_kalimat'] = item
+            hasilKalimat['daftarKalimat'].append(list_kalimat)
+    except KeyError:
+        pass
     return hasilKalimat
+
 
 def createJSONWordsList(listName):
     #default_index = '0'
-    default_item ='blank'
-    hasilKata = {}
-    hasilKata['daftarKata'] = []   
-    hasilKata = adict.get('daftarKata',default_item)
-    #hasilKata['daftarKata'] = adict.get('no_kata', default_index)
-    #hasilKata['daftarKata'] = adict.get('teks_kata', default_item)
-    list_kata = {}
-    for index, item in enumerate(listName):
-        list_kata['no_kata'] = index
-        list_kata['teks_kata'] = item
-        hasilKata['daftarKata'].append(list_kata)
+    #default_item ='blank'
+    try: 
+        hasilKata = {}
+        hasilKata['daftarKata'] = []   
+        #hasilKata = adict.get('daftarKata',default_item)
+        #hasilKata['daftarKata'] = adict.get('no_kata', default_index)
+        #hasilKata['daftarKata'] = adict.get('teks_kata', default_item)
+        list_kata = {}
+        for index, item in enumerate(listName):
+            list_kata['no_kata'] = index
+            list_kata['teks_kata'] = item
+            hasilKata['daftarKata'].append(list_kata)
+    except KeyError:
+        pass
     return hasilKata
 
 
@@ -71,8 +78,9 @@ def sent_tokenize():
     
 
     tokenizer = joblib.load('tokenizer.pkl')
+    
     resultToken = tokenizer[0](text=doc)
-  
+        
     return jsonify(createJSONSentenceList(resultToken))
 
 @bahasaID.route('/wordTokenizer/sent', methods=['POST'])
