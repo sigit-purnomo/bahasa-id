@@ -56,7 +56,7 @@ def sent_tokenize():
     """
     
     new_doc = request.get_json()
-    doc = str.replace(new_doc['document'],'"','\"')
+    doc = new_doc['document'].encode('unicode-escape').replace(b'"', b'\\"')
     
 
     tokenizer = joblib.load('bahasa-engine.pkl')
@@ -93,7 +93,7 @@ def word_tokenize():
     """
     
     new_sent = request.get_json()
-    sent = str.replace(new_sent['sentence'],'"','\"')
+    sent = new_sent['sentence'].encode('unicode-escape').replace(b'"', b'\\"')
     
 
     tokenizer = joblib.load('bahasa-engine.pkl')
