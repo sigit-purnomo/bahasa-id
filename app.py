@@ -2,7 +2,6 @@ from flask import Flask,jsonify,request
 from flasgger import Swagger
 from sklearn.externals import joblib
 import json
-import string
 
 bahasaID = Flask(__name__)
 Swagger(bahasaID)
@@ -12,7 +11,7 @@ def createJSONSentenceList(listName):
     hasilKalimat['daftarKalimat'] = []    
     for index, item in enumerate(listName):
         list_kalimat = {}
-        list_kalimat['no_kalimat'] = index
+        list_kalimat['token_id'] = index
         list_kalimat['teks_kalimat'] = item
         hasilKalimat['daftarKalimat'].append(list_kalimat)
     return hasilKalimat
@@ -22,7 +21,7 @@ def createJSONWordsList(listName):
     hasilKata['daftarKata'] = []    
     for index, item in enumerate(listName):
         list_kata = {}
-        list_kata['no_kata'] = index
+        list_kata['token_id'] = index
         list_kata['teks_kata'] = item
         hasilKata['daftarKata'].append(list_kata)
     return hasilKata
@@ -56,9 +55,8 @@ def sent_tokenize():
     """
     
     new_doc = request.get_json()
-    doc = new_doc['document'].encode('unicode-escape').replace(b'"', b'\\"')
+    doc = new_doc['document']
     
-
     tokenizer = joblib.load('bahasa-engine.pkl')
     resultToken = tokenizer[0](text=doc)
   
@@ -93,9 +91,8 @@ def word_tokenize():
     """
     
     new_sent = request.get_json()
-    sent = new_sent['sentence'].encode('unicode-escape').replace(b'"', b'\\"')
+    sent = new_sent['sentence']
     
-
     tokenizer = joblib.load('bahasa-engine.pkl')
     resultToken = tokenizer[1](sent)
   
