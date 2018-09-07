@@ -1,6 +1,3 @@
 wordnet
-<<<<<<< HEAD
 punct
-=======
-punkt
->>>>>>> eb9893aec61e8f1570680df080fcd25fcf4d42a0
+
