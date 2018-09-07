@@ -1,51 +1,30 @@
 from flask import Flask,jsonify,request
 from flasgger import Swagger
 from sklearn.externals import joblib
-from adict import adict
 import json
 
 bahasaID = Flask(__name__)
 Swagger(bahasaID)
 
 def createJSONSentenceList(listName):
-    #default_index = '0'
-    #default_item ='blank'
-    try: 
-        hasilKalimat = {}
-        hasilKalimat['daftarKalimat'] = [] 
-        #hasilKalimat = adict.get('daftarKalimat',default_item)
+    hasilKalimat = {}
+    hasilKalimat['daftarKalimat'] = []    
+    for index, item in enumerate(listName):
         list_kalimat = {}
-        #hasilKalimat['daftarKalimat'] = adict.get('no_kalimat',default_index)
-        #hasilKalimat['daftarKalimat'] = adict.get('teks_kalimat',default_item)
-        for index, item in enumerate(listName):   
-            list_kalimat['no_kalimat'] = index
-            list_kalimat['teks_kalimat'] = item
-            hasilKalimat['daftarKalimat'].append(list_kalimat)
-        return hasilKalimat
-    except KeyError:
-        pass
-    
-
+        list_kalimat['no_kalimat'] = index
+        list_kalimat['teks_kalimat'] = item
+        hasilKalimat['daftarKalimat'].append(list_kalimat)
+    return hasilKalimat
 
 def createJSONWordsList(listName):
-    #default_index = '0'
-    #default_item ='blank'
-    try: 
-        hasilKata = {}
-        hasilKata['daftarKata'] = []   
-        #hasilKata = adict.get('daftarKata',default_item)
-        #hasilKata['daftarKata'] = adict.get('no_kata', default_index)
-        #hasilKata['daftarKata'] = adict.get('teks_kata', default_item)
+    hasilKata = {}
+    hasilKata['daftarKata'] = []    
+    for index, item in enumerate(listName):
         list_kata = {}
-        for index, item in enumerate(listName):
-            list_kata['no_kata'] = index
-            list_kata['teks_kata'] = item
-            hasilKata['daftarKata'].append(list_kata)
-        return hasilKata
-    except KeyError:
-        pass
-    
-
+        list_kata['no_kata'] = index
+        list_kata['teks_kata'] = item
+        hasilKata['daftarKata'].append(list_kata)
+    return hasilKata
 
 @bahasaID.route('/sentTokenizer/doc', methods=['POST'])
 def sent_tokenize():
@@ -79,14 +58,9 @@ def sent_tokenize():
     doc = new_doc['document']
     
 
-<<<<<<< HEAD
-    tokenizer = joblib.load('../bahasa-engine.pkl')
-=======
-    tokenizer = joblib.load('tokenizer.pkl')
-    
->>>>>>> eb9893aec61e8f1570680df080fcd25fcf4d42a0
+    tokenizer = joblib.load('bahasa-engine.pkl')
     resultToken = tokenizer[0](text=doc)
-        
+  
     return jsonify(createJSONSentenceList(resultToken))
 
 @bahasaID.route('/wordTokenizer/sent', methods=['POST'])
@@ -121,12 +95,9 @@ def word_tokenize():
     sent = new_sent['sentence']
     
 
-<<<<<<< HEAD
-    tokenizer = joblib.load('../bahasa-engine.pkl')
-=======
-    tokenizer = joblib.load('tokenizer.pkl')
->>>>>>> eb9893aec61e8f1570680df080fcd25fcf4d42a0
+    tokenizer = joblib.load('bahasa-engine.pkl')
     resultToken = tokenizer[1](sent)
   
     return jsonify(createJSONWordsList(resultToken))
 
+#bahasaID.run(debug=True)
