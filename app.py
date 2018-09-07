@@ -2,6 +2,7 @@ from flask import Flask,jsonify,request
 from flasgger import Swagger
 from sklearn.externals import joblib
 import json
+import string
 
 bahasaID = Flask(__name__)
 Swagger(bahasaID)
@@ -55,7 +56,7 @@ def sent_tokenize():
     """
     
     new_doc = request.get_json()
-    doc = new_doc['document']
+    doc = str.replace(new_doc['document'],'"','\"')
     
 
     tokenizer = joblib.load('bahasa-engine.pkl')
@@ -92,7 +93,7 @@ def word_tokenize():
     """
     
     new_sent = request.get_json()
-    sent = new_sent['sentence']
+    sent = str.replace(new_sent['sentence'],'"','\"')
     
 
     tokenizer = joblib.load('bahasa-engine.pkl')
