@@ -25,6 +25,7 @@ def createJSONWordsList(listName):
         list_kata['teks_kata'] = item
         hasilKata['daftarKata'].append(list_kata)
     return hasilKata
+<<<<<<< HEAD
 
 def createJSONStemsList(listName):
     hasilStem = {}
@@ -35,6 +36,8 @@ def createJSONStemsList(listName):
         list_stem['token_stem'] = item
         hasilStem['daftarStem'].append(list_stem)
     return hasilStem
+=======
+>>>>>>> bccfd53d95290f1b9624a84d7c2006a5d5605c31
 
 @bahasaID.route('/segmentasi/doc', methods=['POST'])
 def segmentasi():
@@ -65,10 +68,17 @@ def segmentasi():
     """
     
     new_doc = request.get_json()
+<<<<<<< HEAD
     doc = new_doc['document']   
 
     function = joblib.load('../bahasa-engine.pkl')
     resultToken = function[0]['segmentasi'](text=doc)
+=======
+    doc = new_doc['document']
+    
+    tokenizer = joblib.load('bahasa-engine.pkl')
+    resultToken = tokenizer[0](text=doc)
+>>>>>>> bccfd53d95290f1b9624a84d7c2006a5d5605c31
   
     return jsonify(createJSONSentenceList(resultToken))
 
@@ -102,6 +112,7 @@ def tokenisasi():
     
     new_sent = request.get_json()
     sent = new_sent['sentence']
+<<<<<<< HEAD
 
     function = joblib.load('../bahasa-engine.pkl')
     resultToken = function[0]['tokenisasi'](sent)
@@ -145,3 +156,12 @@ def stemming():
     return jsonify(createJSONStemsList(resultToken.split()))
 
 bahasaID.run(debug=True)
+=======
+    
+    tokenizer = joblib.load('bahasa-engine.pkl')
+    resultToken = tokenizer[1](sent)
+  
+    return jsonify(createJSONWordsList(resultToken))
+
+#bahasaID.run(debug=True)
+>>>>>>> bccfd53d95290f1b9624a84d7c2006a5d5605c31
