@@ -67,7 +67,7 @@ def segmentasi():
     new_doc = request.get_json()
     doc = new_doc['document']   
 
-    function = joblib.load('../bahasa-engine.pkl')
+    function = joblib.load('bahasa-engine.pkl')
     resultToken = function[0]['segmentasi'](text=doc)
   
     return jsonify(createJSONSentenceList(resultToken))
@@ -103,7 +103,7 @@ def tokenisasi():
     new_sent = request.get_json()
     sent = new_sent['sentence']
 
-    function = joblib.load('../bahasa-engine.pkl')
+    function = joblib.load('bahasa-engine.pkl')
     resultToken = function[0]['tokenisasi'](sent)
   
     return jsonify(createJSONWordsList(resultToken))
@@ -139,7 +139,7 @@ def stemming():
     new_sent = request.get_json()
     sent = new_sent['sentence']
 
-    function = joblib.load('../bahasa-engine.pkl')
+    function = joblib.load('bahasa-engine.pkl')
     resultToken = function[0]['stemming'].stem(sent)
   
     return jsonify(createJSONStemsList(resultToken.split()))
