@@ -1,54 +1,43 @@
 from flask import Flask,jsonify,request
 from flasgger import Swagger
 from sklearn.externals import joblib
-from adict import adict
 import json
 
 bahasaID = Flask(__name__)
 Swagger(bahasaID)
 
 def createJSONSentenceList(listName):
-    #default_index = '0'
-    #default_item ='blank'
-    try: 
-        hasilKalimat = {}
-        hasilKalimat['daftarKalimat'] = [] 
-        #hasilKalimat = adict.get('daftarKalimat',default_item)
+    hasilKalimat = {}
+    hasilKalimat['daftarKalimat'] = []    
+    for index, item in enumerate(listName):
         list_kalimat = {}
-        #hasilKalimat['daftarKalimat'] = adict.get('no_kalimat',default_index)
-        #hasilKalimat['daftarKalimat'] = adict.get('teks_kalimat',default_item)
-        for index, item in enumerate(listName):   
-            list_kalimat['no_kalimat'] = index
-            list_kalimat['teks_kalimat'] = item
-            hasilKalimat['daftarKalimat'].append(list_kalimat)
-        return hasilKalimat
-    except KeyError:
-        pass
-    
-
+        list_kalimat['token_id'] = index
+        list_kalimat['teks_kalimat'] = item
+        hasilKalimat['daftarKalimat'].append(list_kalimat)
+    return hasilKalimat
 
 def createJSONWordsList(listName):
-    #default_index = '0'
-    #default_item ='blank'
-    try: 
-        hasilKata = {}
-        hasilKata['daftarKata'] = []   
-        #hasilKata = adict.get('daftarKata',default_item)
-        #hasilKata['daftarKata'] = adict.get('no_kata', default_index)
-        #hasilKata['daftarKata'] = adict.get('teks_kata', default_item)
+    hasilKata = {}
+    hasilKata['daftarKata'] = []    
+    for index, item in enumerate(listName):
         list_kata = {}
-        for index, item in enumerate(listName):
-            list_kata['no_kata'] = index
-            list_kata['teks_kata'] = item
-            hasilKata['daftarKata'].append(list_kata)
-        return hasilKata
-    except KeyError:
-        pass
-    
+        list_kata['token_id'] = index
+        list_kata['teks_kata'] = item
+        hasilKata['daftarKata'].append(list_kata)
+    return hasilKata
 
+def createJSONStemsList(listName):
+    hasilStem = {}
+    hasilStem['daftarStem'] = []    
+    for index, item in enumerate(listName):
+        list_stem = {}
+        list_stem['token_id'] = index
+        list_stem['token_stem'] = item
+        hasilStem['daftarStem'].append(list_stem)
+    return hasilStem
 
-@bahasaID.route('/sentTokenizer/doc', methods=['POST'])
-def sent_tokenize():
+@bahasaID.route('/segmentasi/doc', methods=['POST'])
+def segmentasi():
     """
     Ini adalah endpoint untuk melakukan tokenisasi kalimat dari dokumen berbahasa Indonesia
     ---
@@ -76,21 +65,15 @@ def sent_tokenize():
     """
     
     new_doc = request.get_json()
-    doc = new_doc['document']
-    
+    doc = new_doc['document']   
 
-<<<<<<< HEAD
-    tokenizer = joblib.load('../bahasa-engine.pkl')
-=======
-    tokenizer = joblib.load('tokenizer.pkl')
-    
->>>>>>> eb9893aec61e8f1570680df080fcd25fcf4d42a0
-    resultToken = tokenizer[0](text=doc)
-        
+    function = joblib.load('../bahasa-engine.pkl')
+    resultToken = function[0]['segmentasi'](text=doc)
+  
     return jsonify(createJSONSentenceList(resultToken))
 
-@bahasaID.route('/wordTokenizer/sent', methods=['POST'])
-def word_tokenize():
+@bahasaID.route('/tokenisasi/sent', methods=['POST'])
+def tokenisasi():
     """
     Ini adalah endpoint untuk melakukan tokenisasi kata dari kalimat berbahasa Indonesia
     ---
@@ -119,14 +102,46 @@ def word_tokenize():
     
     new_sent = request.get_json()
     sent = new_sent['sentence']
-    
 
-<<<<<<< HEAD
-    tokenizer = joblib.load('../bahasa-engine.pkl')
-=======
-    tokenizer = joblib.load('tokenizer.pkl')
->>>>>>> eb9893aec61e8f1570680df080fcd25fcf4d42a0
-    resultToken = tokenizer[1](sent)
+    function = joblib.load('../bahasa-engine.pkl')
+    resultToken = function[0]['tokenisasi'](sent)
   
     return jsonify(createJSONWordsList(resultToken))
 
+@bahasaID.route('/stemming/sent', methods=['POST'])
+def stemming():
+    """
+    Ini adalah endpoint untuk melakukan stemming  kalimat berbahasa Indonesia
+    ---
+    tags:
+        - Rest Controller
+    parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            id: Sentence
+            required:
+                - sentence
+            properties:
+                sentence:
+                    type: string
+                    description: Silahkan isikan kalimat berbahasa Indonesia yang akan ditokenisasi ke dalam kalimat
+                    default: ""
+    responses:
+        200:
+            description: Berhasil
+        400:
+            description: Mohon maaf, ada permasalahan dalam memproses permintaan Anda
+
+    """
+    
+    new_sent = request.get_json()
+    sent = new_sent['sentence']
+
+    function = joblib.load('../bahasa-engine.pkl')
+    resultToken = function[0]['stemming'].stem(sent)
+  
+    return jsonify(createJSONStemsList(resultToken.split()))
+
+bahasaID.run(debug=True)
