@@ -1,5 +1,7 @@
 # bahasa-id
-API for NLP Tasks in Bahasa Indonesia
+Application Programming Interface (API) untuk tugas-tugas pengolahan bahasa alami (natural language processinng) Bahasa Indonesia.
+
+## 1. Fungsionalitas
 
 | No | Fitur | Deskripsi Fitur | API Endpoint |
 | ------------- | ------------- | ------------- | ------------- |
