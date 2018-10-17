@@ -35,6 +35,15 @@ def createJSONStemsList(listName):
         list_stem['token_stem'] = item
         hasilStem['daftarStem'].append(list_stem)
     return hasilStem
+def createJSONLemmaList(listName):
+    hasilLemma = {}
+    hasilLemma['daftarLemma'] = []    
+    for token in listName:
+        list_lemma = {}
+        #list_lemma['token_text'] = token.text
+        list_lemma['token_lemma'] = token.lemma_
+        hasilLemma['daftarLemma'].append(list_lemma)
+    return hasilLemma
 
 @bahasaID.route('/segmentasi/doc', methods=['POST'])
 def segmentasi():
@@ -144,4 +153,39 @@ def stemming():
   
     return jsonify(createJSONStemsList(resultToken.split()))
 
+@bahasaID.route('/lemmatisasi/sent', methods=['POST'])
+def lemmatisasi():
+    """
+    Ini adalah endpoint untuk melakukan lemmatisasi kalimat berbahasa Indonesia
+    ---
+    tags:
+        - Rest Controller
+    parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            id: Sentence
+            required:
+                - sentence
+            properties:
+                sentence:
+                    type: string
+                    description: Silahkan isikan kalimat berbahasa Indonesia yang akan dilemmatizing ke dalam kalimat
+                    default: ""
+    responses:
+        200:
+            description: Berhasil
+        400:
+            description: Mohon maaf, ada permasalahan dalam memproses permintaan Anda
+
+    """
+    
+    new_sent = request.get_json()
+    sent = new_sent['sentence']
+
+    function = joblib.load('../bahasa-engine.pkl')
+    resultToken = function[0]['lemmatisasi'].lemma(sent)
+
+    return jsonify(createJSONLemmaList(resultToken))
 #bahasaID.run(debug=True)
