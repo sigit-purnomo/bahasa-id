@@ -184,7 +184,7 @@ def lemmatisasi():
     new_sent = request.get_json()
     sent = new_sent['sentence']
 
-    function = joblib.load('../bahasa-engine.pkl')
+    function = joblib.load('bahasa-engine.pkl')
     resultToken = function[0]['lemmatisasi'].lemma(sent)
 
     return jsonify(createJSONLemmaList(resultToken))
