@@ -18,3 +18,4 @@ sklearn==0.0
 Werkzeug==0.14.1
 adict==0.1.7
 PySastrawi==1.2.0
+spacy==2.0.16
