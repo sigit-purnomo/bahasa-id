@@ -1,2 +1,2 @@
 wordnet
-punct
+punkt
